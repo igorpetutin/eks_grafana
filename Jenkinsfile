@@ -9,17 +9,14 @@ pipeline {
         TF_VAR_pagerduty_token    = credentials('pagerduty_token')
         TF_VAR_grafana_admin_password = credentials('grafana_admin_user_pass')
     }
-
     stages {
         stage('Checkout') {
-
            steps{
                 cleanWs deleteDirs: true, patterns: [[pattern: 'Sandbox_monitoring', type: 'EXCLUDE']]
                 git branch: 'master', credentialsId: 'GitHub2', url: 'git@github.com:igorpetutin/monitoring-stack'
             }
         }
 
-Next step
         stage('Plan-grafana') {
             steps {
                 script {
@@ -33,14 +30,12 @@ Next step
                 sh 'terraform -chdir=grafana/ show -no-color grafana_tfplan.out > grafana_tfplan.txt'
             }
         }
-
         stage('Approval-grafana') {
             when {
                 not {
                     equals expected: true, actual: params.autoApprove
                 }
             }
-
             steps {
                 script {
                     def plan = readFile 'grafana_tfplan.txt'
@@ -49,7 +44,6 @@ Next step
                 }
             }
         }
-
         stage('Apply-grafana') {
             steps {
                 // withCredentials([usernamePassword(credentialsId: 'sb_grafana_admin_user_pass', passwordVariable: 'grafana_admin_password', usernameVariable: 'grafana_admin_user')]) {
@@ -60,9 +54,7 @@ Next step
                 // }
             }
         } 
-
     }
-
     post {
             always {
                 archiveArtifacts artifacts: '*.txt'

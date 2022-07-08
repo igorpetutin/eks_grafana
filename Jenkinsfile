@@ -25,6 +25,7 @@ Next step
                 script {
                     currentBuild.displayName = params.version
                 }
+                sh 'export TF_VAR_grafana_admin_user=$grafana_admin_user' 
                 sh 'export TF_VAR_grafana_admin_password=${TF_VAR_grafana_admin_password}'
                 sh 'terraform -chdir=grafana/ init  -input=false'
                 sh 'terraform -chdir=grafana/ validate'
@@ -52,8 +53,8 @@ Next step
         stage('Apply-grafana') {
             steps {
                 // withCredentials([usernamePassword(credentialsId: 'sb_grafana_admin_user_pass', passwordVariable: 'grafana_admin_password', usernameVariable: 'grafana_admin_user')]) {
-                // sh 'export TF_VAR_grafana_admin_password=$grafana_admin_password'
-                // sh 'export TF_VAR_grafana_admin_user=$grafana_admin_user' 
+                // future request push pd keys
+                sh 'export TF_VAR_grafana_admin_user=$grafana_admin_user' 
                 sh 'export TF_VAR_grafana_admin_password=${TF_VAR_grafana_admin_password}'              
                 sh "terraform -chdir=grafana/ apply -input=false grafana_tfplan.out"
                 // }

@@ -1,0 +1,6 @@
+grafana:
+  enabled: true
+  forceDeployDatasources: false
+  forceDeployDashboards: false
+  defaultDashboardsEnabled: true
+  defaultDashboardsTimezone: utc

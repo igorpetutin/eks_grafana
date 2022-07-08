@@ -13,7 +13,7 @@ pipeline {
         stage('Checkout') {
            steps{
                 cleanWs deleteDirs: true, patterns: [[pattern: 'Sandbox_monitoring', type: 'EXCLUDE']]
-                git branch: 'master', credentialsId: 'GitHub2', url: 'git@github.com:igorpetutin/monitoring-stack'
+                git branch: 'master', credentialsId: 'GitHub2', url: 'git@github.com:igorpetutin/eks_grafana'
             }
         }
 
@@ -24,10 +24,10 @@ pipeline {
                 }
                 sh 'export TF_VAR_grafana_admin_user=$grafana_admin_user' 
                 sh 'export TF_VAR_grafana_admin_password=${TF_VAR_grafana_admin_password}'
-                sh 'terraform -chdir=grafana/ init  -input=false'
-                sh 'terraform -chdir=grafana/ validate'
-                sh "terraform -chdir=grafana/ plan -input=false -out grafana_tfplan.out"
-                sh 'terraform -chdir=grafana/ show -no-color grafana_tfplan.out > grafana_tfplan.txt'
+                sh 'terraform init  -input=false'
+                sh 'terraform validate'
+                sh "terraform plan -input=false -out grafana_tfplan.out"
+                sh 'terraform show -no-color grafana_tfplan.out > grafana_tfplan.txt'
             }
         }
         stage('Approval-grafana') {
@@ -50,7 +50,7 @@ pipeline {
                 // future request push pd keys
                 sh 'export TF_VAR_grafana_admin_user=$grafana_admin_user' 
                 sh 'export TF_VAR_grafana_admin_password=${TF_VAR_grafana_admin_password}'              
-                sh "terraform -chdir=grafana/ apply -input=false grafana_tfplan.out"
+                sh "terraform apply -input=false grafana_tfplan.out"
                 // }
             }
         } 

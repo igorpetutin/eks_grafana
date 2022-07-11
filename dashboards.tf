@@ -6,7 +6,7 @@
   pattern = "./dashboards/*.json"
 } */
 resource "grafana_dashboard" "additional" {
-  /* provider    = grafana.base */
+  provider    = grafana.base
   for_each    = fileset(path.module, "./dashboards/*.json")
   config_json = file(each.key)
 }

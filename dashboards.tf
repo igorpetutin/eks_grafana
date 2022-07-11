@@ -9,7 +9,7 @@ data "dashboards_filename_list" "jsons" {
 
 
 resource "grafana_dashboard" "additional" {
-  provider    = grafana.base
+  /* provider    = grafana.base */
   count       = length(data.dashboards_filename_list.jsons.matches)
   config_json = file(element(data.dashboards_filename_list.jsons.matches, count.index))
 }

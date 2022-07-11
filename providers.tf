@@ -1,7 +1,7 @@
 provider "grafana" {
-  alias = "base"
-  url   = var.grafana_url
-  auth  = "${var.grafana_admin_user}:${var.grafana_admin_password}"
+  /* alias = "base" */
+  url  = var.grafana_url
+  auth = "${var.grafana_admin_user}:${var.grafana_admin_password}"
 }
 provider "aws" {
   /* access_key = var.access_key

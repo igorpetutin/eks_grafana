@@ -3,13 +3,6 @@ resource "grafana_organization" "geocomply" {
   provider = grafana.base
   name     = "geocomply"
 }
-
-provider "grafana" {
-  alias  = "geocomply"
-  url    = var.grafanaUrl
-  auth   = "${var.grafanaAdminUser}:${var.grafanaAdminPassword}"
-  org_id = grafana_organization.geocomply.org_id
-}
 resource "helm_release" "prometheus_operator" {
   name      = "kube-prometheus-stack"
   chart     = "${path.module}/grafana_chart"

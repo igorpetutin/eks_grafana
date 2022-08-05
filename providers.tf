@@ -25,8 +25,8 @@ data "terraform_remote_state" "base" {
   backend = "s3"
 
   config = {
-    bucket = "gc-sre-terraform-plans"
-    key    = "gc-sre-cluster/terraform.tfstate"
+    bucket         = "gc-sre-terraform-plans873212398515-us-east-1-dev"
+    key            = "gc-sre/stacks/eks_monitoring_cluster/dev/us-east-1/terraform.tfstate"    
     region = "us-east-1"
   }
 }

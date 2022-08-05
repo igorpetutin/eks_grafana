@@ -17,8 +17,6 @@ provider "aws" {
 
 data "aws_caller_identity" "current" {} # used for accesing Account ID and ARN
 
-
-
 data "aws_eks_cluster_auth" "cluster" {
   name = "gc-infra-sb-eks-monitoring"
 }
@@ -38,19 +36,6 @@ provider "helm" {
     cluster_ca_certificate = base64decode(data.terraform_remote_state.base.outputs.cluster_certificate_authority_data)
     token                  = data.aws_eks_cluster_auth.cluster.token
   }
-}
-
-provider "kubectl" {
-  host                   = data.terraform_remote_state.base.outputs.cluster_endpoint
-  cluster_ca_certificate = base64decode(data.terraform_remote_state.base.outputs.cluster_certificate_authority_data)
-  token                  = data.aws_eks_cluster_auth.cluster.token
-  load_config_file       = false
-}
-
-provider "kubernetes" {
-  host                   = data.terraform_remote_state.base.outputs.cluster_endpoint
-  cluster_ca_certificate = base64decode(data.terraform_remote_state.base.outputs.cluster_certificate_authority_data)
-  token                  = data.aws_eks_cluster_auth.cluster.token
 }
 provider "pagerduty" {
   token = var.pagerduty_token

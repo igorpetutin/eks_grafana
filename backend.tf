@@ -13,22 +13,15 @@ terraform {
       source  = "hashicorp/helm"
       version = "~> 2.0"
     }
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "~> 2.0"
-    }
-    kubectl = {
-      source  = "gavinbunney/kubectl"
-      version = ">= 1.7.0"
-    }
     pagerduty = {
       source = "pagerduty/pagerduty"
     }
   }
   backend "s3" {
-    bucket = "gc-sre-terraform-plans"
-    key    = "gc-sre-cluster-resources/grafana.tfstate"
-    region = "us-east-1"
+    bucket         = "gc-sre-terraform-plans873212398515-us-east-1-dev"
+    key            = "gc-sre/stacks/eks_grafana/dev/us-east-1/terraform.tfstate"
+    region         = "us-east-1"
+    encrypt        = true
+    dynamodb_table = "terraform_locks"
   }
 }
-

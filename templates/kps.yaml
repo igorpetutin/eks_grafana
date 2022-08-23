@@ -4,3 +4,17 @@ grafana:
   forceDeployDashboards: false
   defaultDashboardsEnabled: true
   defaultDashboardsTimezone: utc
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+      multicluster:
+        global:
+          enabled: true
+        etcd:
+          enabled: true
+      provider:
+        allowUiUpdates: true
+    datasources:
+      enabled: true
+      defaultDatasourceEnabled: true  
